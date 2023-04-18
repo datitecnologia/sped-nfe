@@ -35,7 +35,7 @@
     "require": {
         "php": ">= 7.2",
         "datitecnologia/sped-common": "^1.0",
-        "nfephp-org/sped-gtin": "^1.1.0",
+        "datitecnologia/sped-gtin": "^1.0",
         "justinrainbow/json-schema": "^5.2",
         "ext-zlib": "*",
         "ext-dom": "*",
