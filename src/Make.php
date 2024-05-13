@@ -988,6 +988,7 @@ class Make
             'CNAE',
             'CRT',
             'CNPJ',
+            'filial',
             'CPF'
         ];
         $std = $this->equilizeParameters($std, $possible);
@@ -1010,6 +1011,13 @@ class Make
                 $identificador . "CPF do remetente"
             );
         }
+        $this->dom->addChild(
+            $this->emit,
+            "filial",
+            substr(trim($std->filial), 0, 60),
+            false,
+            $identificador . "filial"
+        );
         $this->dom->addChild(
             $this->emit,
             "xNome",
@@ -1187,7 +1195,8 @@ class Make
             'email',
             'CNPJ',
             'CPF',
-            'idEstrangeiro'
+            'idEstrangeiro',
+            'codClientEmissor'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'E01 <dest> - ';
@@ -1237,6 +1246,14 @@ class Make
             );
             $std->indIEDest = '9';
         }
+        $this->dom->addChild(
+            $this->dest,
+            "codClientEmissor",
+            $std->codClientEmissor,
+            false,
+            $identificador . "Código Cliente Emissor",
+            true
+        );
         $this->dom->addChild(
             $this->dest,
             "xNome",
@@ -1762,7 +1779,10 @@ class Make
             'indTot',
             'xPed',
             'nItemPed',
-            'nFCI'
+            'nFCI',
+            'pedido',
+            'lineItem',
+            'pesoLiq'
         ];
         $std = $this->equilizeParameters($std, $possible);
         //totalizador
@@ -1791,6 +1811,27 @@ class Make
 
         $identificador = 'I01 <prod> - ';
         $prod = $this->dom->createElement("prod");
+        $this->dom->addChild(
+            $prod,
+            "pedido",
+            $std->pedido,
+            false,
+            $identificador . "[item $std->item] Código do pedido"
+        );
+        $this->dom->addChild(
+            $prod,
+            "lItem",
+            $std->lItem,
+            false,
+            $identificador . "[item $std->item] Código do Line Item"
+        );
+        $this->dom->addChild(
+            $prod,
+            "pesoLiq",
+            $std->pesoLiq,
+            false,
+            $identificador . "[item $std->item] Valor do peso Líquido"
+        );
         $this->dom->addChild(
             $prod,
             "cProd",
@@ -2105,7 +2146,8 @@ class Make
             'tpIntermedio',
             'CNPJ',
             'UFTerceiro',
-            'cExportador'
+            'cExportador',
+            'urfEntrada'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $identificador = 'I8 <DI> - ';
@@ -2130,6 +2172,13 @@ class Make
             $std->xLocDesemb,
             true,
             $identificador . "[item $std->item] Local de desembaraço"
+        );
+        $this->dom->addChild(
+            $tDI,
+            "urfEntrada",
+            $std->urfEntrada,
+            false,
+            $identificador . "[item $std->item] URF de Entrada"
         );
         $this->dom->addChild(
             $tDI,
@@ -6479,7 +6528,8 @@ class Make
             'xMun',
             'UF',
             'CNPJ',
-            'CPF'
+            'CPF',
+            'codClientTransp'
         ];
         $std = $this->equilizeParameters($std, $possible);
         $transporta = $this->dom->createElement("transporta");
@@ -6489,6 +6539,13 @@ class Make
             $std->CNPJ,
             false,
             "CNPJ do Transportador"
+        );
+        $this->dom->addChild(
+            $transporta,
+            "codClientTransp",
+            $std->codClientTransp,
+            false,
+            "Código Cliente do Transportador"
         );
         $this->dom->addChild(
             $transporta,
