@@ -1816,7 +1816,7 @@ class Make
             "pedido",
             $std->pedido,
             false,
-            $identificador . "[item $std->item] Código do pedido"
+            $identificador . "[item $std->item] Código do pedido "
         );
         $this->dom->addChild(
             $prod,
